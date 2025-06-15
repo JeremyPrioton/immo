@@ -2,11 +2,21 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <script>
+  // Pré-remplissage à partir de l'URL
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    for (const [key, value] of params.entries()) {
+      const input = document.querySelector(`[name="${key}"]`);
+      if (input) input.value = value;
+    }
+  });
+</script>
   <title>Ajout Notion</title>
 </head>
 <body>
   <h1>Ajouter une annonce</h1>
-  <form action="TON_URL_APPS_SCRIPT" method="post">
+  <form action="https://script.google.com/macros/s/AKfycbygXnrPwrHFPGvo202zojY_VijDQnU7WO8zPXepkJDYNAo7HT9Ko_85g98yPx7ZZkks9g/exec" method="post">
     <input name="titre" placeholder="Titre de l'annonce" required><br>
     <input name="localisation" placeholder="Commune"><br>
     <input name="surface" type="number" placeholder="Surface en m²"><br>
