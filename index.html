@@ -3,13 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <script>
-  // Pré-remplissage à partir de l'URL
-  window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    for (const [key, value] of params.entries()) {
-      const input = document.querySelector(`[name="${key}"]`);
-      if (input) input.value = value;
-    }
+    // Pré-remplissage à partir de l'URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      for (const [key, value] of params.entries()) {
+        const input = document.querySelector(`[name="${key}"]`);
+        if (input) input.value = value;
+      }
+    });
+  </script>
+  <script>
+  document.getElementById('myForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    const response = await fetch("https://script.google.com/macros/s/TON_URL/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const text = await response.text();
+    alert("Réponse serveur : " + text);
   });
 </script>
   <title>Ajout Notion</title>
