@@ -4,20 +4,48 @@
   <meta charset="UTF-8" />
   <title>Ajout Notion</title>
   <script>
-    // Fonction appelée une fois que le DOM est chargé
+    // Pré-remplissage à partir de l'URL
     window.addEventListener('DOMContentLoaded', () => {
-      // Pré-remplissage à partir de l'URL
       const params = new URLSearchParams(window.location.search);
       for (const [key, value] of params.entries()) {
         const input = document.querySelector(`[name="${key}"]`);
         if (input) input.value = value;
+      }
+
+      const form = document.getElementById('notion-form');
+      if (form) {
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
+
+          // Facultatif : nettoyage des champs numériques
+          if (data.surface) data.surface = Number(data.surface);
+          if (data.prix) data.prix = Number(data.prix);
+
+          try {
+            const response = await fetch("https://script.google.com/macros/s/AKfycbyjymw5StLGBhiryqhI9qvED9KbGJMuc2Ko_KTdmwXPTPGMCYbk4751umiTo54Ng3QFWw/exec", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            });
+
+            const text = await response.text();
+            alert("Réponse serveur : " + text);
+          } catch (err) {
+            alert("Erreur lors de l'envoi : " + err.message);
+          }
+        });
       }
     });
   </script>
 </head>
 <body>
   <h1>Ajouter une annonce</h1>
-  <form id="notion-form" action="https://script.google.com/macros/s/AKfycbyjymw5StLGBhiryqhI9qvED9KbGJMuc2Ko_KTdmwXPTPGMCYbk4751umiTo54Ng3QFWw/exec" method="post">
+  <form id="notion-form">
     <input name="titre" placeholder="Titre de l'annonce" required><br>
     <input name="localisation" placeholder="Commune"><br>
     <input name="surface" type="number" placeholder="Surface en m²"><br>
