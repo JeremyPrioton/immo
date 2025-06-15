@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajout Notion</title>
+</head>
+<body>
+  <h1>Ajouter une annonce</h1>
+  <form action="TON_URL_APPS_SCRIPT" method="post">
+    <input name="titre" placeholder="Titre de l'annonce" required><br>
+    <input name="localisation" placeholder="Commune"><br>
+    <input name="surface" type="number" placeholder="Surface en m²"><br>
+    <input name="prix" type="number" placeholder="Prix"><br>
+    <input name="image_url" placeholder="URL image"><br>
+    <input name="url" placeholder="Lien de l’annonce"><br>
+    <input name="tags" placeholder="Tags (séparés par des virgules)"><br>
+    <textarea name="commentaire" placeholder="Commentaire"></textarea><br>
+    <button type="submit">Envoyer</button>
+  </form>
+</body>
+</html>
