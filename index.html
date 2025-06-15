@@ -13,7 +13,7 @@
     });
   </script>
   <script>
-  document.getElementById('notionForm').addEventListener('submit', async function (e) {
+  document.getElementById('notion-form').addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const form = e.target;
@@ -35,7 +35,7 @@
 </head>
 <body>
   <h1>Ajouter une annonce</h1>
-  <form id="notionForm">
+  <form id="notion-form">
     <input name="titre" placeholder="Titre de l'annonce" required><br>
     <input name="localisation" placeholder="Commune"><br>
     <input name="surface" type="number" placeholder="Surface en m²"><br>
