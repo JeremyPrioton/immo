@@ -2,38 +2,45 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <title>Ajout Notion</title>
   <script>
-    // Pré-remplissage à partir de l'URL
+    // Fonction appelée une fois que le DOM est chargé
     window.addEventListener('DOMContentLoaded', () => {
+      // Pré-remplissage à partir de l'URL
       const params = new URLSearchParams(window.location.search);
       for (const [key, value] of params.entries()) {
         const input = document.querySelector(`[name="${key}"]`);
         if (input) input.value = value;
       }
-      manageForm();
-    });
 
-    function manageForm() {
-      document.getElementById('notion-form').addEventListener('submit', async function (e) {
-        e.preventDefault();
-    
-        const form = e.target;
-        const data = Object.fromEntries(new FormData(form).entries());
-    
-        const response = await fetch("https://script.google.com/macros/s/AKfycbygXnrPwrHFPGvo202zojY_VijDQnU7WO8zPXepkJDYNAo7HT9Ko_85g98yPx7ZZkks9g/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
+      // Maintenant que le DOM est prêt, on attache l'event listener
+      const form = document.getElementById('notion-form');
+      if (form) {
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          const data = Object.fromEntries(new FormData(form).entries());
+
+          try {
+            const response = await fetch("https://script.google.com/macros/s/AKfycbygXnrPwrHFPGvo202zojY_VijDQnU7WO8zPXepkJDYNAo7HT9Ko_85g98yPx7ZZkks9g/exec", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            });
+
+            const text = await response.text();
+            alert("Réponse serveur : " + text);
+          } catch (err) {
+            alert("Erreur lors de l'envoi : " + err.message);
+          }
         });
-    
-        const text = await response.text();
-        alert("Réponse serveur : " + text);
-      });
-    }
-</script>
-  <title>Ajout Notion</title>
+      } else {
+        console.error("Le formulaire avec l'id 'notion-form' est introuvable");
+      }
+    });
+  </script>
 </head>
 <body>
   <h1>Ajouter une annonce</h1>
