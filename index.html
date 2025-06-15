@@ -10,26 +10,28 @@
         const input = document.querySelector(`[name="${key}"]`);
         if (input) input.value = value;
       }
-    });
-  </script>
-  <script>
-  document.getElementById('notion-form').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const form = e.target;
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    const response = await fetch("https://script.google.com/macros/s/AKfycbygXnrPwrHFPGvo202zojY_VijDQnU7WO8zPXepkJDYNAo7HT9Ko_85g98yPx7ZZkks9g/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      manageForm();
     });
 
-    const text = await response.text();
-    alert("Réponse serveur : " + text);
-  });
+    function manageForm() {
+      document.getElementById('notion-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+    
+        const form = e.target;
+        const data = Object.fromEntries(new FormData(form).entries());
+    
+        const response = await fetch("https://script.google.com/macros/s/AKfycbygXnrPwrHFPGvo202zojY_VijDQnU7WO8zPXepkJDYNAo7HT9Ko_85g98yPx7ZZkks9g/exec", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+    
+        const text = await response.text();
+        alert("Réponse serveur : " + text);
+      });
+    }
 </script>
   <title>Ajout Notion</title>
 </head>
